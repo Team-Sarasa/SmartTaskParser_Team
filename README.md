@@ -1,14 +1,15 @@
-# SmartTaskParser  
-LINE × LLM × Notion の「自然文タスク登録」自動化システム 🚀  
+# 📘 SmartTaskParser
 
-SmartTaskParser は、  
+LINE × LLM × Notion の「自然文タスク登録」自動化システム 🚀
+
+SmartTaskParser は、
 **LINE で自然文の「やること」を送るだけで Notion に自動でタスク登録**できるツールです。
 
-- 「明日の午前までに研究のスライド直す」
-- 「金曜までに就活のメール送る」
-- 「今日やること：買い物」
+* 「明日の午前までに研究のスライド直す」
+* 「金曜までに就活のメール送る」
+* 「今日やること：買い物」
 
-などを普通に送るだけで、  
+などを普通に送るだけで、
 Gemini（LLM）が解析し、Notion に整理されたタスクとして保存します。
 
 本プロジェクトは **Docker + FastAPI + Cloud Run** で稼働するサーバレス構成です。
@@ -17,20 +18,19 @@ Gemini（LLM）が解析し、Notion に整理されたタスクとして保存�
 
 ## ✨ Features
 
-- **LINE から自然文を送るだけでタスク化**
-- **Gemini 1.5 / 2.x** によるタスク情報抽出（タイトル・期限・優先度・メモ）
-- **Notion API** によるタスクデータベース登録
-- 各タスクの **Notion ページ URL を LINE に返す**
-- Cloud Run での常時稼働（サーバレス）
-- Webhook 署名検証対応（本番運用可能）
-- シンプルで拡張しやすい構造
+* **LINE から自然文を送るだけでタスク化**
+* **Gemini 1.5 / 2.x** によるタスク情報抽出（タイトル・期限・優先度・メモ）
+* **Notion API** によるタスクデータベース登録
+* 各タスクの **Notion ページ URL を LINE に返す**
+* Cloud Run での常時稼働（サーバレス）
+* Webhook 署名検証対応（本番運用可能）
+* シンプルで拡張しやすい構造
 
 ---
 
 ## 📂 Project Structure
 
 ```
-
 SmartTaskParser/
 ├── app/
 │   ├── main.py            # FastAPI エントリポイント
@@ -42,18 +42,55 @@ SmartTaskParser/
 ├── requirements.txt
 ├── Dockerfile
 └── README.md
-
-````
+```
 
 ---
 
 ## 🧠 Local Development
 
-### 1. Install dependencies
+### 0. Create Virtual Environment (venv)
+
+ローカル開発では Python の仮想環境利用を推奨します。
+
+#### 1. venv 作成
+
+```bash
+python3 -m venv .venv
+```
+
+#### 2. venv 有効化
+
+macOS / Linux:
+
+```bash
+source .venv/bin/activate
+```
+
+Windows (PowerShell):
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+#### 3. 依存関係インストール
 
 ```bash
 pip install -r requirements.txt
-````
+```
+
+#### 4. venv の終了（任意）
+
+```bash
+deactivate
+```
+
+---
+
+### 1. Install dependencies（※venv 有効化状態で）
+
+```bash
+pip install -r requirements.txt
+```
 
 ### 2. Create `.env`
 
@@ -138,13 +175,11 @@ https://<cloud-run-url>/line/webhook
 
 ## 🔧 Customization
 
-* **カテゴリ分け**（研究 / 就活 / プライベート）
+* **カテゴリ分け（研究 / 就活 / プライベート）**
 * **タスク完了操作**
 * **週次・日次リマインド**
 * **今日のタスク一覧**
-* **FlexMessage UI**（「Notionで開く」ボタンなど）
-
-すべて簡単に追加できます（すでに下地構造があるため）。
+* **FlexMessage UI（Notionを開くボタン等）**
 
 ---
 

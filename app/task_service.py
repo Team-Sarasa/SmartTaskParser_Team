@@ -27,6 +27,7 @@ def create_task_from_text(
     due_date_str = parsed.get("due_date")
     priority = parsed.get("priority") or "medium"
     notes = parsed.get("notes")
+    category = parsed.get("category")
 
     # 2. 文字列の日付を date 型に変換（不正なら None）
     due_date: Optional[date] = _parse_date_str(due_date_str)
@@ -39,6 +40,7 @@ def create_task_from_text(
         notes=notes,
         source=source,
         user_id=user_id,
+        category=category,
     )
 
     # 4. Notion に保存
@@ -48,6 +50,7 @@ def create_task_from_text(
         priority=task.priority,
         notes=task.notes,
         source=task.source,
+        category=task.category,
     )
     task.page_id = page_id
     task.page_url = page_url

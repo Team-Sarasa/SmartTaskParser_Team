@@ -14,6 +14,7 @@ class Task(BaseModel):
     due_date: Optional[date] = None
     priority: str = "medium"  # "low" | "medium" | "high"
     notes: Optional[str] = None
+    category: Optional[str] = None
     source: str = "line"
     user_id: Optional[str] = None
     page_id: Optional[str] = None  # Notion ページ ID

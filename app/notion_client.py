@@ -26,6 +26,7 @@ def create_notion_task(
     due_date: Optional[date],
     priority: str,
     notes: Optional[str],
+    category: Optional[str],
     source: str = "line",
 ) -> tuple[str, str]:
     """
@@ -94,6 +95,14 @@ def create_notion_task(
                     }
                 }
             ]
+        }
+
+    # カテゴリ (Select)
+    if category:
+        properties["Category"] = {
+            "select": {
+                "name": category,
+            }
         }
 
     page = notion.pages.create(
