@@ -64,6 +64,16 @@ def create_notion_task(
                 "name": priority_to_notion(priority),
             }
         },
+        # ソース (Select)
+        "Source": {
+            "rich_text": [
+                {
+                    "text": {
+                        "content": source,
+                    }
+                }
+            ]
+        },
     }
 
     # 期限 (Date)
