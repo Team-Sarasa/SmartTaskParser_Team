@@ -27,7 +27,7 @@ def create_notion_task(
     priority: str,
     notes: Optional[str],
     source: str = "line",
-) -> str:
+) -> tuple[str, str]:
     """
     Notion のタスク用データベースに 1 件タスクを登録する。
 
@@ -61,7 +61,7 @@ def create_notion_task(
         # 優先度 (Select)
         "Priority": {
             "select": {
-                "name": priority_to_notion(priority),
+                "name": priority,
             }
         },
         # ソース (Select)
@@ -102,21 +102,6 @@ def create_notion_task(
     )
 
     # page["id"] は "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" 形式
-    return page["id"]
+    return page["id"], page["url"]
 
 
-def priority_to_notion(priority: str) -> str:
-    """
-    内部表現の priority を Notion の Select 名に変換する。
-    Notion 側の選択肢名に合わせること。
-      - low    -> "低"
-      - medium -> "中"
-      - high   -> "高"
-    想定外の値が来たら "中" 扱いにする。
-    """
-    mapping = {
-        "low": "低",
-        "medium": "中",
-        "high": "高",
-    }
-    return mapping.get(priority, "中")

@@ -42,14 +42,15 @@ def create_task_from_text(
     )
 
     # 4. Notion に保存
-    _page_id = notion_client.create_notion_task(
+    page_id, page_url = notion_client.create_notion_task(
         title=task.title,
         due_date=task.due_date,
         priority=task.priority,
         notes=task.notes,
         source=task.source,
     )
-    # 今は page_id は返していないが、必要なら Task にフィールド足して持たせてもOK
+    task.page_id = page_id
+    task.page_url = page_url
 
     return task
 

@@ -1,8 +1,9 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 from .schemas import ParseAndCreateRequest, Task
-from . import task_service
+from . import task_service, line_handlers
+from linebot.exceptions import InvalidSignatureError
 
 
 app = FastAPI(
@@ -55,6 +56,29 @@ def parse_and_create_task(req: ParseAndCreateRequest):
         # TODO: logging に置き換える（今はとりあえず print）
         print(f"[ERROR] /tasks/parse-and-create failed: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
+    
+@app.post("/line/webhook")
+async def line_webhook(request: Request):
+    """
+    LINE Messaging API 用 Webhook エンドポイント。
+    LINE 側の設定からここに POST が飛んでくる。
+    """
+    signature = request.headers.get("X-Line-Signature", "")
+    body = await request.body()
+    body_str = body.decode("utf-8")
+
+    try:
+        line_handlers.handle_line_webhook(body_str, signature)
+    except InvalidSignatureError:
+        # 署名が正しくない場合
+        raise HTTPException(status_code=400, detail="Invalid signature")
+    except Exception as e:
+        print(f"[ERROR] /line/webhook failed: {e}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
+
+    # LINE Webhook は基本 200 を返せばOK
+    return "OK"
+
 
 
 # ローカル実行用（`python -m app.main` で起動できるようにしておく）

@@ -16,3 +16,5 @@ class Task(BaseModel):
     notes: Optional[str] = None
     source: str = "line"
     user_id: Optional[str] = None
+    page_id: Optional[str] = None  # Notion ページ ID
+    page_url: Optional[str] = None  # Notion ページ URL
