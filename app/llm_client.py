@@ -35,7 +35,7 @@ def parse_task_text(text: str) -> Dict[str, Any]:
 
     response = model.generate_content(prompt)
 
-    # Gemini は時々余計なテキストを返すので JSON 抽出が必要
+    # Gemini は時々余計なテキストを返すので JSON 抽出がいるよん
     json_dict = extract_json_from_response(response.text)
 
     # 最終的に日付形式の整形
